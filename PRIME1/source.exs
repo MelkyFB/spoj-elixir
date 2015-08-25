@@ -3,25 +3,13 @@ defmodule PrimeGen do
   end
   def primes(t), do: find_primes(t, String.split(IO.gets(''), ~r{\s}, trim: true))
 
-  def find_primes(t, [a,b]) when (is_binary(a) or is_binary(b)), do:  find_primes(t, [String.to_integer(a), String.to_integer(b)])
-  def find_primes(t, [b,b]), do: find_primes(t, [b,b], is_prime(b))
-  def find_primes(t, [a,b]), do: find_primes(t, [a,b], is_prime(a))
-
-  defp find_primes(t, [b,b], true) do
-    IO.puts b
-    IO.puts ''
+  def find_primes(t, [a,b]) when (is_binary(a) or is_binary(b)), do:  find_primes(t, (String.to_integer(a)..String.to_integer(b)))
+  def find_primes(t, numbers) do
+    numbers |> Enum.reject(&rem(&1, 2) == 0)
+            |> Enum.filter(&is_prime(&1))
+            |> Enum.each(&IO.puts(&1))
+    IO.puts(' ')
     primes(t-1)
-  end
-  defp find_primes(t, [b,b], false) do
-    IO.puts ''
-    primes(t-1)
-  end
-  defp find_primes(t, [a,b], true) do
-    IO.puts a
-    find_primes(t, [a+1,b])
-  end
-  defp find_primes(t, [a,b], false) do
-    find_primes(t, [a+1,b])
   end
 
   defp is_prime(1), do: false

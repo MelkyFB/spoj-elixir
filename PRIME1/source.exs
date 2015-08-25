@@ -13,14 +13,11 @@ defmodule PrimeGen do
   end
 
   defp is_prime(1), do: false
-  defp is_prime(a) when rem(a,2) == 0, do: false
   defp is_prime(a) do
     is_prime(3,a)
   end
 
-  defp is_prime(divisor, number) do
-    is_prime(divisor, number, round(:math.sqrt(number) + 1))
-  end
+  defp is_prime(divisor, number), do: is_prime(divisor, number, round(:math.sqrt(number) + 1))
 
   defp is_prime(divisor, _, stop) when divisor >= stop, do: true
   defp is_prime(divisor, number, _) do
